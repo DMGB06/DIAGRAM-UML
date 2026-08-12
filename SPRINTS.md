@@ -31,7 +31,7 @@ Plan de trabajo de esta iteración (rediseño: interfaz + Clases/Secuencia sóli
 ```
 Sprint 0   Documentación y renombrado          ✅
 Sprint 1   Modelo técnico: detección + sync    ✅
-Sprint 2   Clases y Secuencia sólidos (roundtrip)
+Sprint 2   Clases y Secuencia sólidos (roundtrip) ✅
 Sprint 3   Rediseño de interfaz (header + contextual)
 Sprint 4   Cierre, verificación y siguiente ciclo
 ```
@@ -76,10 +76,10 @@ Backlog post-iteración (no forma parte de estos sprints): pulir Casos de uso/Ac
 **Objetivo:** Los dos tipos priorizados funcionan ida y vuelta código ↔ visual de forma confiable.
 
 **Entregables:**
-- [ ] Clases: labels de relaciones visibles en el lienzo
-- [ ] Secuencia: orden de mensajes estable, labels visibles en el lienzo
-- [ ] Tests roundtrip código → visual → código para ambos tipos
-- [ ] `docs/SUPPORTED_SYNTAX.md` documentando el subset soportado por tipo
+- [x] Clases: labels de relaciones visibles en el lienzo
+- [x] Secuencia: orden de mensajes estable, labels visibles en el lienzo
+- [x] Tests roundtrip código → visual → código para ambos tipos
+- [x] `docs/SUPPORTED_SYNTAX.md` documentando el subset soportado por tipo
 
 **DoD:** Diagrama ejemplo de Clases y de Secuencia sobrevive roundtrip en tests.
 
@@ -146,4 +146,4 @@ No es sprint hasta priorizar. Candidatos:
 4. Anotar decisiones/gotchas nuevos en `docs/contexto/` sobre la marcha.
 5. Pasar al siguiente sprint.
 
-**Siguiente paso:** implementar Sprint 1 (`detectDiagramType` + `syncStatus` + merge de layout).
+**Siguiente paso:** implementar Sprint 3 (rediseño de interfaz).
