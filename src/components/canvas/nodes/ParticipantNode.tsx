@@ -1,8 +1,14 @@
 import { Handle, Position, type Node, type NodeProps } from "@xyflow/react";
 
+import { maxMessageOrder, sequenceLifelineHeight } from "../../../diagram/sequenceLayout";
 import type { DiagramNodeData } from "../../../diagram/types";
+import { useDiagramStore } from "../../../store/useDiagramStore";
 
 export function ParticipantNode({ data, selected }: NodeProps<Node<DiagramNodeData>>) {
+  const lifelineHeight = useDiagramStore((state) =>
+    sequenceLifelineHeight(maxMessageOrder(state.edges)),
+  );
+
   return (
     <div
       className={`relative flex flex-col items-center ${data.isEditingEdge ? "is-editing-edge" : ""}`}
@@ -17,7 +23,10 @@ export function ParticipantNode({ data, selected }: NodeProps<Node<DiagramNodeDa
       >
         {data.label}
       </div>
-      <div className="h-[420px] border-l border-dashed border-slate-400" />
+      <div
+        className="border-l border-dashed border-slate-400"
+        style={{ height: lifelineHeight }}
+      />
     </div>
   );
 }

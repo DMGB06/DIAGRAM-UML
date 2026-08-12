@@ -1,3 +1,4 @@
+import { sequenceMessageY } from "./sequenceLayout";
 import type { DiagramEdgeData } from "./types";
 
 export interface EdgeGeometry {
@@ -41,10 +42,14 @@ export function computeEdgeGeometry(
   targetY: number,
   lineStyle: DiagramEdgeData["lineStyle"],
   curveOffset: number,
+  order?: number,
 ): EdgeGeometry {
+  const effectiveSourceY = order !== undefined ? sequenceMessageY(order) : sourceY;
+  const effectiveTargetY = order !== undefined ? sequenceMessageY(order) : targetY;
+
   return {
-    path: getEditablePath(sourceX, sourceY, targetX, targetY, lineStyle, curveOffset),
+    path: getEditablePath(sourceX, effectiveSourceY, targetX, effectiveTargetY, lineStyle, curveOffset),
     labelX: (sourceX + targetX) / 2,
-    labelY: (sourceY + targetY) / 2,
+    labelY: (effectiveSourceY + effectiveTargetY) / 2,
   };
 }

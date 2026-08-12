@@ -23,6 +23,7 @@ export function EditableEdge({
     targetY,
     lineStyle,
     curveOffset,
+    edgeData?.order,
   );
 
   return (
