@@ -33,7 +33,7 @@ Sprint 0   Documentación y renombrado          ✅
 Sprint 1   Modelo técnico: detección + sync    ✅
 Sprint 2   Clases y Secuencia sólidos (roundtrip) ✅
 Sprint 3   Rediseño de interfaz (header + contextual) ✅
-Sprint 4   Cierre, verificación y siguiente ciclo
+Sprint 4   Cierre, verificación y siguiente ciclo ✅
 ```
 
 Backlog post-iteración (no forma parte de estos sprints): pulir Casos de uso/Actividades, más tipos UML, CI, atajos de teclado, syntax highlighting. Ver sección Backlog al final.
@@ -104,18 +104,27 @@ Backlog post-iteración (no forma parte de estos sprints): pulir Casos de uso/Ac
 
 ---
 
-## Sprint 4 — Cierre y verificación
+## Sprint 4 — Cierre y verificación ✅
 
 **Objetivo:** Confirmar que se cumplen los 6 criterios de éxito de `proyecto.md` antes de cerrar la iteración.
 
 **Entregables:**
-- [ ] Revisar los 6 criterios de éxito uno por uno
-- [ ] `npm run build && npm test -- --run && npm run lint` en verde
-- [ ] Confirmar que Casos de uso y Actividades no se rompieron
-- [ ] Actualizar este archivo marcando la iteración cerrada
+- [x] Revisar los 6 criterios de éxito uno por uno
+- [x] `npm run build && npm test -- --run && npm run lint` en verde
+- [x] Confirmar que Casos de uso y Actividades no se rompieron
+- [x] Actualizar este archivo marcando la iteración cerrada
 - [ ] Decidir con el usuario el siguiente ciclo (ej: pulir Casos de uso/Actividades)
 
 **DoD:** Los 6 criterios de éxito de `proyecto.md` cumplidos y verificados.
+
+**Verificación de los 6 criterios de éxito (manual, `npm run dev` + navegador):**
+
+1. Código de Clases/Secuencia sin ambigüedad → badge de tipo detectado, sin selector visible. Verificado.
+2. Header con máximo 4 controles visibles (3 en el caso normal: badge/Sincronizar/⋯; 4 cuando el selector inline aparece por código vacío/ambiguo). Verificado.
+3. Mover un nodo y pulsar Sincronizar preserva el layout existente (merge, no reset) — probado moviendo `Participante3` y confirmando que su posición y las demás se mantuvieron tras generar código y volver a generar visual. Verificado.
+4. Roundtrip código → visual → código cubierto por `tests/diagram/roundtripClassDiagram.test.ts` y `roundtripSequenceDiagram.test.ts`, en verde.
+5. `npm run build`, `npx vitest run` (112/112) y `npm run lint` en verde sobre `main` tras el merge de Sprint 3.
+6. Casos de uso y Actividades probados a mano: cambiar el selector a cada tipo carga su diagrama de ejemplo, el panel de Elementos filtra correctamente (Actor/Caso de uso/Sistema/Nota — Inicio/Actividad/Decision/Fin) y el lienzo renderiza sin errores de consola. Verificado, sin cambios de código (fuera de alcance de esta iteración).
 
 ---
 
@@ -146,4 +155,4 @@ No es sprint hasta priorizar. Candidatos:
 4. Anotar decisiones/gotchas nuevos en `docs/contexto/` sobre la marcha.
 5. Pasar al siguiente sprint.
 
-**Siguiente paso:** implementar Sprint 4 (cierre y verificación).
+**Siguiente paso:** iteración cerrada. Decidir con el usuario el próximo ciclo — candidatos en la sección Backlog de este archivo (ej. pulir Casos de uso/Actividades al mismo estándar que Clases/Secuencia).
