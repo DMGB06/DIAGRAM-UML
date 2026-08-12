@@ -20,7 +20,7 @@ export function toPlantUml(
 
     const keyword =
       node.data.kind === "interface" ? "interface" : node.data.kind === "enum" ? "enum" : "class";
-    lines.push(`${keyword} "${escapeText(node.data.label)}" as ${alias}`);
+    lines.push(`${keyword} ${alias}`);
   }
 
   for (const edge of edges) {

@@ -2,6 +2,7 @@ import type { Edge, Node } from "@xyflow/react";
 import { describe, expect, it } from "vitest";
 
 import { toPlantUml } from "../../src/diagram/generators/toPlantUml";
+import { parseClassDiagram } from "../../src/diagram/parser/parseClassDiagram";
 import type { DiagramEdgeData, DiagramNodeData } from "../../src/diagram/types";
 
 const baseStyle = {
@@ -27,8 +28,8 @@ describe("toPlantUml", () => {
       },
     ];
 
-    expect(toPlantUml(nodes, [])).toContain('class "Cliente" as cliente');
-    expect(toPlantUml(nodes, [])).toContain('class "Pedido" as pedido');
+    expect(toPlantUml(nodes, [])).toContain("class cliente");
+    expect(toPlantUml(nodes, [])).toContain("class pedido");
   });
 
   it("generates relations from visual edges", () => {
@@ -77,5 +78,21 @@ describe("toPlantUml", () => {
     expect(uml).not.toContain("position");
     expect(uml).not.toContain("#ffffff");
     expect(uml).not.toContain("100");
+  });
+
+  it("generates class declarations that parseClassDiagram can read back", () => {
+    const nodes: Array<Node<DiagramNodeData>> = [
+      {
+        id: "Usuario",
+        type: "umlClass",
+        position: { x: 100, y: 100 },
+        data: { label: "Usuario", kind: "class", style: baseStyle },
+      },
+    ];
+    const generated = toPlantUml(nodes, []);
+    const reparsed = parseClassDiagram(generated);
+
+    expect(reparsed.errors).toEqual([]);
+    expect(reparsed.nodes.map((node) => node.id)).toEqual(["Usuario"]);
   });
 });
