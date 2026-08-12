@@ -11,35 +11,35 @@ export function CodeEditor() {
 
   return (
     <div className="flex h-full flex-col">
-      <div className="border-b border-slate-800 bg-slate-900/70 p-3">
+      <div className="border-b border-[var(--line)] bg-[var(--surface)] p-3">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-sm font-semibold text-slate-100">Codigo UML</h2>
-            <p className="mt-1 text-xs text-slate-400">
+            <h2 className="text-sm font-semibold text-[var(--ink)]">Codigo UML</h2>
+            <p className="mt-1 text-xs text-[var(--graphite)]">
               Diagrama de {diagramLabel.toLowerCase()} compatible con sintaxis PlantUML.
             </p>
           </div>
-          <span className="rounded border border-slate-700 bg-slate-950 px-2 py-1 text-[11px] font-medium text-cyan-200">
+          <span className="rounded border border-[var(--line)] bg-[var(--paper)] px-2 py-1 text-[11px] font-medium text-[var(--accent)]">
             PlantUML
           </span>
         </div>
       </div>
-      <div className="grid min-h-0 flex-1 grid-cols-[48px_minmax(0,1fr)] bg-[#151a23]">
-        <div className="select-none overflow-hidden border-r border-slate-700/60 bg-[#101722] py-4 pr-3 text-right font-mono text-[13px] leading-5 text-slate-600">
+      <div className="grid min-h-0 flex-1 grid-cols-[48px_minmax(0,1fr)] bg-[var(--surface)]">
+        <div className="select-none overflow-hidden border-r border-[var(--line)] bg-[var(--paper)] py-4 pr-3 text-right font-mono text-[13px] leading-5 text-[var(--graphite)]">
           {lineNumbers.map((line) => (
             <div key={line}>{line}</div>
           ))}
         </div>
         <textarea
-          className="h-full w-full resize-none border-0 bg-[#151a23] p-4 font-mono text-[13px] leading-5 caret-cyan-300 outline-none placeholder:text-slate-600"
-          style={{ color: "#aeb7c6" }}
+          className="h-full w-full resize-none border-0 bg-[var(--surface)] p-4 font-mono text-[13px] leading-5 outline-none placeholder:text-[var(--graphite)]"
+          style={{ color: "var(--ink)", caretColor: "var(--accent)" }}
           spellCheck={false}
           value={source}
           onChange={(event) => setSource(event.target.value)}
         />
       </div>
       {errors.length > 0 && (
-        <div className="max-h-32 overflow-auto border-t border-amber-500/30 bg-amber-950/30 p-3 text-xs text-amber-100">
+        <div className="max-h-32 overflow-auto border-t border-[var(--danger)]/30 bg-[var(--danger-soft)] p-3 text-xs text-[var(--danger)]">
           {errors.map((error, index) => (
             <p key={`${index}-${error}`}>{error}</p>
           ))}

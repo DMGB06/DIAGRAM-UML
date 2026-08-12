@@ -37,10 +37,10 @@ export function ElementPanel() {
   const definition = getDiagramDefinition(diagramType);
 
   return (
-    <section className="border-b border-slate-800 bg-slate-950 p-3">
+    <section className="border-b border-[var(--line)] bg-[var(--paper)] p-3">
       <div className="mb-3">
-        <h2 className="text-sm font-semibold text-slate-100">Elementos</h2>
-        <p className="mt-1 text-xs text-slate-400">{definition.elementPanelDescription}</p>
+        <h2 className="text-sm font-semibold text-[var(--ink)]">Elementos</h2>
+        <p className="mt-1 text-xs text-[var(--graphite)]">{definition.elementPanelDescription}</p>
       </div>
       <div className="grid grid-cols-2 gap-2">
         {definition.elements.map((element) => {
@@ -49,15 +49,15 @@ export function ElementPanel() {
           return (
             <button
               key={element.kind}
-              className="group rounded border border-slate-800 bg-slate-900 p-3 text-left hover:border-cyan-500/60 hover:bg-slate-800"
+              className="group rounded border border-[var(--line)] bg-[var(--surface)] p-3 text-left hover:border-[var(--accent)] hover:bg-[var(--paper)]"
               type="button"
               onClick={() => addNode(element.kind)}
             >
-              <div className="flex items-center gap-2 text-sm font-medium text-slate-100">
-                <Icon size={15} className="text-cyan-300" />
+              <div className="flex items-center gap-2 text-sm font-medium text-[var(--ink)]">
+                <Icon size={15} className="text-[var(--accent)]" />
                 {element.label}
               </div>
-              <p className="mt-1 text-xs text-slate-500 group-hover:text-slate-400">
+              <p className="mt-1 text-xs text-[var(--graphite)] group-hover:text-[var(--ink)]">
                 {element.description}
               </p>
             </button>
