@@ -3,6 +3,7 @@ import { create } from "zustand";
 
 import { getDiagramDefinition } from "../diagram/diagramRegistry";
 import { detectDiagramType } from "../diagram/detectDiagramType";
+import { ELEMENT_PALETTE } from "../diagram/elementPalette";
 import { mergeNodePositions } from "../diagram/mergeLayout";
 import { maxMessageOrder } from "../diagram/sequenceLayout";
 import type {
@@ -36,86 +37,62 @@ const nodeDefaults: Record<
 > = {
   class: {
     label: "NuevaClase",
-    fill: "#ffffff",
-    stroke: "#3559e8",
-    text: "#14161b",
+    ...ELEMENT_PALETTE.class,
     type: "umlClass",
   },
   interface: {
     label: "NuevaInterfaz",
-    fill: "#ffffff",
-    stroke: "#3559e8",
-    text: "#14161b",
+    ...ELEMENT_PALETTE.class,
     type: "umlClass",
   },
   enum: {
     label: "NuevoEnum",
-    fill: "#ffffff",
-    stroke: "#3559e8",
-    text: "#14161b",
+    ...ELEMENT_PALETTE.class,
     type: "umlClass",
   },
   note: {
     label: "Nota",
-    fill: "#fbf1e1",
-    stroke: "#c98a2b",
-    text: "#14161b",
+    ...ELEMENT_PALETTE.note,
     type: "umlClass",
   },
   "activity-start": {
     label: "Inicio",
-    fill: "#14161b",
-    stroke: "#14161b",
-    text: "#ffffff",
+    ...ELEMENT_PALETTE.terminal,
     type: "startEndNode",
   },
   activity: {
     label: "Actividad",
-    fill: "#ffffff",
-    stroke: "#1e9e7c",
-    text: "#14161b",
+    ...ELEMENT_PALETTE.activity,
     type: "activityNode",
   },
   "activity-decision": {
     label: "Decision",
-    fill: "#ffffff",
-    stroke: "#1e9e7c",
-    text: "#14161b",
+    ...ELEMENT_PALETTE.activity,
     type: "decisionNode",
   },
   "activity-end": {
     label: "Fin",
-    fill: "#14161b",
-    stroke: "#14161b",
-    text: "#ffffff",
+    ...ELEMENT_PALETTE.terminal,
     type: "startEndNode",
   },
   actor: {
     label: "Actor",
-    fill: "#ffffff",
-    stroke: "#c98a2b",
-    text: "#14161b",
+    ...ELEMENT_PALETTE.usecase,
     type: "actorNode",
   },
   usecase: {
     label: "Caso de uso",
-    fill: "#ffffff",
-    stroke: "#c98a2b",
-    text: "#14161b",
+    ...ELEMENT_PALETTE.usecase,
     type: "useCaseNode",
   },
   "system-boundary": {
     label: "Sistema",
-    fill: "#ffffff",
-    stroke: "#6c7280",
-    text: "#14161b",
+    ...ELEMENT_PALETTE.neutral,
     type: "systemBoundaryNode",
   },
   participant: {
     label: "Participante",
-    fill: "#ffffff",
-    stroke: "#e2542b",
-    text: "#14161b",
+    ...ELEMENT_PALETTE.sequence,
     type: "participantNode",
   },
 };

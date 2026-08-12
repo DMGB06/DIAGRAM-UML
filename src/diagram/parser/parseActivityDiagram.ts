@@ -1,22 +1,5 @@
+import { ELEMENT_PALETTE } from "../elementPalette";
 import type { ParserResult } from "../types";
-
-const activityStyle = {
-  fill: "#eef6ff",
-  stroke: "#2563eb",
-  text: "#111827",
-};
-
-const decisionStyle = {
-  fill: "#fff7df",
-  stroke: "#a86b00",
-  text: "#111827",
-};
-
-const terminalStyle = {
-  fill: "#111827",
-  stroke: "#111827",
-  text: "#ffffff",
-};
 
 export function parseActivityDiagram(source: string): ParserResult {
   const nodes: ParserResult["nodes"] = [];
@@ -38,21 +21,21 @@ export function parseActivityDiagram(source: string): ParserResult {
         id: `start-${index}`,
         type: "startEndNode",
         position,
-        data: { label: "Inicio", kind: "activity-start", style: terminalStyle },
+        data: { label: "Inicio", kind: "activity-start", style: ELEMENT_PALETTE.terminal },
       };
     } else if (line === "stop" || line === "end") {
       node = {
         id: `end-${index}`,
         type: "startEndNode",
         position,
-        data: { label: "Fin", kind: "activity-end", style: terminalStyle },
+        data: { label: "Fin", kind: "activity-end", style: ELEMENT_PALETTE.terminal },
       };
     } else if (line.startsWith(":") && line.endsWith(";")) {
       node = {
         id: `activity-${index}`,
         type: "activityNode",
         position,
-        data: { label: line.slice(1, -1), kind: "activity", style: activityStyle },
+        data: { label: line.slice(1, -1), kind: "activity", style: ELEMENT_PALETTE.activity },
       };
     } else if (line.startsWith("if ") || line.startsWith("if(")) {
       const label = line
@@ -63,7 +46,7 @@ export function parseActivityDiagram(source: string): ParserResult {
         id: `decision-${index}`,
         type: "decisionNode",
         position,
-        data: { label: label || "Decision", kind: "activity-decision", style: decisionStyle },
+        data: { label: label || "Decision", kind: "activity-decision", style: ELEMENT_PALETTE.activity },
       };
     } else if (line.startsWith("else") || line === "endif") {
       return;

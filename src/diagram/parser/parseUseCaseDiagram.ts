@@ -1,8 +1,5 @@
+import { ELEMENT_PALETTE } from "../elementPalette";
 import type { ParserResult } from "../types";
-
-const actorStyle = { fill: "#ffffff", stroke: "#111827", text: "#111827" };
-const useCaseStyle = { fill: "#eef6ff", stroke: "#2563eb", text: "#111827" };
-const boundaryStyle = { fill: "#ffffff", stroke: "#64748b", text: "#334155" };
 
 export function parseUseCaseDiagram(source: string): ParserResult {
   const nodes = new Map<string, ParserResult["nodes"][number]>();
@@ -22,7 +19,7 @@ export function parseUseCaseDiagram(source: string): ParserResult {
 
     if (actorMatch) {
       const label = clean(actorMatch[1]);
-      ensureNode(nodes, label, label, "actorNode", "actor", actorStyle, index++);
+      ensureNode(nodes, label, label, "actorNode", "actor", ELEMENT_PALETTE.usecase, index++);
       continue;
     }
 
@@ -34,7 +31,7 @@ export function parseUseCaseDiagram(source: string): ParserResult {
         label,
         "systemBoundaryNode",
         "system-boundary",
-        boundaryStyle,
+        ELEMENT_PALETTE.neutral,
         index++,
       );
       continue;
@@ -51,14 +48,22 @@ export function parseUseCaseDiagram(source: string): ParserResult {
         continue;
       }
 
-      ensureNode(nodes, id, label, "useCaseNode", "usecase", useCaseStyle, index++);
+      ensureNode(nodes, id, label, "useCaseNode", "usecase", ELEMENT_PALETTE.usecase, index++);
       continue;
     }
 
     if (relationMatch) {
       const [, source, target] = relationMatch;
-      ensureNode(nodes, source, source, "actorNode", "actor", actorStyle, index++);
-      ensureNode(nodes, target, target, "useCaseNode", "usecase", useCaseStyle, index++);
+      ensureNode(nodes, source, source, "actorNode", "actor", ELEMENT_PALETTE.usecase, index++);
+      ensureNode(
+        nodes,
+        target,
+        target,
+        "useCaseNode",
+        "usecase",
+        ELEMENT_PALETTE.usecase,
+        index++,
+      );
       edges.push({
         id: `${source}-${target}-${edges.length}`,
         source,

@@ -84,13 +84,13 @@ export function createDiagramSvg(options: ExportDiagramOptions) {
   const offsetX = padding - bounds.x;
   const offsetY = padding - bounds.y;
   const background = resolveBackground(options.background, options.canvasBackground);
-  const gridColor = background === "#0f172a" ? "#334155" : "#cbd5e1";
+  const gridColor = background === "#14161b" ? "#2a2e36" : "#e3e6ea";
 
   return [
     `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">`,
     "<defs>",
-    `<marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#334155"/></marker>`,
-    `<pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="${gridColor}"/></pattern>`,
+    `<marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#6c7280"/></marker>`,
+    `<pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M 20 0 L 0 0 0 20" fill="none" stroke="${gridColor}" stroke-width="1"/></pattern>`,
     "</defs>",
     background ? `<rect width="100%" height="100%" fill="${background}"/>` : "",
     `<rect width="100%" height="100%" fill="url(#grid)" opacity="0.55"/>`,
@@ -202,10 +202,10 @@ function renderEdge(
         ? `M ${start.x} ${start.y} L ${end.x} ${end.y}`
         : `M ${start.x} ${start.y} C ${(start.x + end.x) / 2} ${start.y - (edge.data?.curveOffset ?? 0)}, ${(start.x + end.x) / 2} ${end.y + (edge.data?.curveOffset ?? 0)}, ${end.x} ${end.y}`;
   const label = edge.data?.label
-    ? `<text x="${(start.x + end.x) / 2}" y="${(start.y + end.y) / 2 - 8}" text-anchor="middle" font-family="Arial" font-size="12" fill="#334155">${escapeXml(edge.data.label)}</text>`
+    ? `<text x="${(start.x + end.x) / 2}" y="${(start.y + end.y) / 2 - 8}" text-anchor="middle" font-family="Arial" font-size="12" fill="#6c7280">${escapeXml(edge.data.label)}</text>`
     : "";
 
-  return `<g><path d="${path}" fill="none" stroke="#334155" stroke-width="2"${markerStart}${markerEnd}/>${label}</g>`;
+  return `<g><path d="${path}" fill="none" stroke="#6c7280" stroke-width="2"${markerStart}${markerEnd}/>${label}</g>`;
 }
 
 function getNodeSize(node: Node<DiagramNodeData>) {
@@ -236,8 +236,8 @@ function getBounds(nodes: ExportNode[]) {
 function resolveBackground(background: ExportBackground, canvasBackground: "light" | "dark") {
   if (background === "transparent") return "";
   if (background === "white") return "#ffffff";
-  if (background === "dark") return "#0f172a";
-  return canvasBackground === "light" ? "#f8fafc" : "#0f172a";
+  if (background === "dark") return "#14161b";
+  return canvasBackground === "light" ? "#f8f9fa" : "#14161b";
 }
 
 function svgToPng(svg: string, scale: number) {

@@ -3,15 +3,13 @@ import { Handle, Position, type Node, type NodeProps } from "@xyflow/react";
 import type { DiagramNodeData } from "../../../diagram/types";
 
 export function StartEndNode({ data, selected }: NodeProps<Node<DiagramNodeData>>) {
-  const isStart = data.kind === "activity-start";
-
   return (
     <div
       className={`flex size-20 items-center justify-center rounded-full border text-xs font-semibold shadow-sm ${
         data.isEditingEdge ? "is-editing-edge" : ""
       }`}
       style={{
-        background: isStart ? "var(--ink)" : data.style.fill,
+        background: data.style.fill,
         borderColor: selected ? "var(--accent)" : data.style.stroke,
         color: data.style.text,
       }}

@@ -1,10 +1,5 @@
+import { ELEMENT_PALETTE } from "../elementPalette";
 import type { ParserResult } from "../types";
-
-const DEFAULT_STYLE = {
-  fill: "#e8f1ff",
-  stroke: "#2f5d9f",
-  text: "#111827",
-};
 
 const relationMap = [
   { token: "--|>", relation: "inheritance" },
@@ -98,7 +93,7 @@ function ensureNode(
     data: {
       label: id,
       kind,
-      style: DEFAULT_STYLE,
+      style: ELEMENT_PALETTE.class,
     },
   });
 }

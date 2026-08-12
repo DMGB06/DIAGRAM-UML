@@ -1,6 +1,5 @@
+import { ELEMENT_PALETTE } from "../elementPalette";
 import type { ParserResult } from "../types";
-
-const participantStyle = { fill: "#ffffff", stroke: "#2563eb", text: "#111827" };
 
 export function parseSequenceDiagram(source: string): ParserResult {
   const nodes = new Map<string, ParserResult["nodes"][number]>();
@@ -71,7 +70,7 @@ function ensureParticipant(
     data: {
       label,
       kind: "participant",
-      style: participantStyle,
+      style: ELEMENT_PALETTE.sequence,
     },
   });
 }
