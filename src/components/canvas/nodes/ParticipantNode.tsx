@@ -17,14 +17,14 @@ export function ParticipantNode({ data, selected }: NodeProps<Node<DiagramNodeDa
       <div
         className="min-w-36 rounded border bg-white px-4 py-2 text-center text-sm font-semibold shadow-sm"
         style={{
-          borderColor: selected ? "#06b6d4" : data.style.stroke,
+          borderColor: selected ? "var(--accent)" : data.style.stroke,
           color: data.style.text,
         }}
       >
         {data.label}
       </div>
       <div
-        className="border-l border-dashed border-slate-400"
+        className="border-l border-dashed border-[var(--line)]"
         style={{ height: lifelineHeight }}
       />
     </div>

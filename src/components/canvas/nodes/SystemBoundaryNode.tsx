@@ -9,7 +9,7 @@ export function SystemBoundaryNode({ data, selected }: NodeProps<Node<DiagramNod
         data.isEditingEdge ? "is-editing-edge" : ""
       }`}
       style={{
-        borderColor: selected ? "#06b6d4" : data.style.stroke,
+        borderColor: selected ? "var(--accent)" : data.style.stroke,
         color: data.style.text,
       }}
     >

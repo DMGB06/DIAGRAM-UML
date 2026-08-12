@@ -34,7 +34,7 @@ export function EditableEdge({
         markerEnd={markerEnd}
         interactionWidth={28}
         style={{
-          stroke: selected ? "#06b6d4" : "#64748b",
+          stroke: selected ? "var(--accent)" : "var(--graphite)",
           strokeWidth: selected ? 3 : 2,
         }}
       />
@@ -46,7 +46,7 @@ export function EditableEdge({
               transform: `translate(-50%, -50%) translate(${labelX}px, ${labelY}px)`,
               pointerEvents: "none",
             }}
-            className="rounded border border-slate-700 bg-slate-900/90 px-1.5 py-0.5 text-xs text-slate-100"
+            className="rounded border border-[var(--line)] bg-[var(--surface)] px-1.5 py-0.5 text-xs text-[var(--ink)]"
           >
             {edgeData.label}
           </div>

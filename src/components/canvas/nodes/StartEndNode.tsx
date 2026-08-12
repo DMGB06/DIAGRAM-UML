@@ -11,8 +11,8 @@ export function StartEndNode({ data, selected }: NodeProps<Node<DiagramNodeData>
         data.isEditingEdge ? "is-editing-edge" : ""
       }`}
       style={{
-        background: isStart ? "#111827" : data.style.fill,
-        borderColor: selected ? "#06b6d4" : data.style.stroke,
+        background: isStart ? "var(--ink)" : data.style.fill,
+        borderColor: selected ? "var(--accent)" : data.style.stroke,
         color: data.style.text,
       }}
     >

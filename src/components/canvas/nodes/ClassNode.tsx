@@ -11,7 +11,7 @@ export function ClassNode({ data, selected }: NodeProps<Node<DiagramNodeData>>) 
         }`}
         style={{
           background: data.style.fill,
-          borderColor: selected ? "#06b6d4" : data.style.stroke,
+          borderColor: selected ? "var(--accent)" : data.style.stroke,
           color: data.style.text,
         }}
       >
@@ -28,7 +28,7 @@ export function ClassNode({ data, selected }: NodeProps<Node<DiagramNodeData>>) 
       }`}
       style={{
         background: data.style.fill,
-        borderColor: selected ? "#06b6d4" : data.style.stroke,
+        borderColor: selected ? "var(--accent)" : data.style.stroke,
         color: data.style.text,
       }}
     >
@@ -38,8 +38,8 @@ export function ClassNode({ data, selected }: NodeProps<Node<DiagramNodeData>>) 
         {data.kind === "enum" ? `<<${data.kind}>> ` : ""}
         {data.label}
       </div>
-      <div className="px-3 py-2 text-xs text-slate-600">+ atributo: tipo</div>
-      <div className="border-t px-3 py-2 text-xs text-slate-600">+ metodo(): void</div>
+      <div className="px-3 py-2 text-xs text-[var(--graphite)]">+ atributo: tipo</div>
+      <div className="border-t px-3 py-2 text-xs text-[var(--graphite)]">+ metodo(): void</div>
     </div>
   );
 }

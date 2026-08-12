@@ -10,7 +10,7 @@ export function DecisionNode({ data, selected }: NodeProps<Node<DiagramNodeData>
         className="absolute inset-4 rotate-45 border shadow-sm"
         style={{
           background: data.style.fill,
-          borderColor: selected ? "#06b6d4" : data.style.stroke,
+          borderColor: selected ? "var(--accent)" : data.style.stroke,
         }}
       />
       <div

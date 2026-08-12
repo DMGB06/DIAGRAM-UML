@@ -13,7 +13,7 @@ export function ActorNode({ data, selected }: NodeProps<Node<DiagramNodeData>>) 
       <UseCaseHandles />
       <div
         className="size-10 rounded-full border-2 bg-white"
-        style={{ borderColor: selected ? "#06b6d4" : data.style.stroke }}
+        style={{ borderColor: selected ? "var(--accent)" : data.style.stroke }}
       />
       <div className="h-10 w-0 border-l-2" style={{ borderColor: data.style.stroke }} />
       <div

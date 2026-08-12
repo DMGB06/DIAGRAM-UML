@@ -10,7 +10,7 @@ export function ActivityNode({ data, selected }: NodeProps<Node<DiagramNodeData>
       }`}
       style={{
         background: data.style.fill,
-        borderColor: selected ? "#06b6d4" : data.style.stroke,
+        borderColor: selected ? "var(--accent)" : data.style.stroke,
         color: data.style.text,
       }}
     >
