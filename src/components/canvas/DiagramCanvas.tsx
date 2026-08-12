@@ -143,9 +143,9 @@ export function DiagramCanvas() {
       }}
     >
       <Background
-        color={canvasBackground === "light" ? "#cbd5e1" : "#334155"}
-        gap={24}
-        variant={BackgroundVariant.Dots}
+        color={canvasBackground === "light" ? "#e3e6ea" : "#2a2e36"}
+        gap={20}
+        variant={BackgroundVariant.Lines}
       />
       <Controls />
       <SelectionToolbar />
