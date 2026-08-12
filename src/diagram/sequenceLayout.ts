@@ -1,4 +1,7 @@
-export const SEQUENCE_HEADER_OFFSET = 64;
+// Participant nodes are placed at canvas y=80 (see parseSequenceDiagram.ts) and the
+// participant box itself is ~40px tall — this offset must clear both so the first
+// message row doesn't overlap the boxes.
+export const SEQUENCE_HEADER_OFFSET = 140;
 export const SEQUENCE_ROW_HEIGHT = 56;
 
 const SEQUENCE_MIN_LIFELINE_HEIGHT = 200;

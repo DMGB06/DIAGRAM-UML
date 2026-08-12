@@ -761,15 +761,23 @@ export const useDiagramStore = create<DiagramState>((set, get) => ({
     const result = definition.parse(source);
     const mergedNodes = mergeNodePositions(previousNodes, result.nodes);
 
+    const nodeX = new Map(mergedNodes.map((node) => [node.id, node.position.x]));
+
     set({
       nodes: mergedNodes,
-      edges: result.edges.map((edge) => ({
-        ...edge,
-        type: "umlEditable",
-        sourceHandle: "right-source",
-        targetHandle: "left-target",
-        ...applyArrowDirection(edge, "forward"),
-      })),
+      edges: result.edges.map((edge) => {
+        const isSequenceMessage = edge.data?.order !== undefined;
+        const sourceIsLeftmost =
+          isSequenceMessage && (nodeX.get(edge.source) ?? 0) <= (nodeX.get(edge.target) ?? 0);
+
+        return {
+          ...edge,
+          type: "umlEditable",
+          sourceHandle: sourceIsLeftmost ? "left-source" : "right-source",
+          targetHandle: sourceIsLeftmost ? "right-target" : "left-target",
+          ...applyArrowDirection(edge, "forward"),
+        };
+      }),
       errors: [...result.errors, ...definition.validate(mergedNodes, result.edges)],
       selectedNodeId: undefined,
       selectedNodeIds: [],

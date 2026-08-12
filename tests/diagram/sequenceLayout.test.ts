@@ -8,12 +8,12 @@ import {
 
 describe("sequenceMessageY", () => {
   it("places the first message at the header offset", () => {
-    expect(sequenceMessageY(1)).toBe(64);
+    expect(sequenceMessageY(1)).toBe(140);
   });
 
   it("spaces messages by the row height", () => {
-    expect(sequenceMessageY(2)).toBe(120);
-    expect(sequenceMessageY(3)).toBe(176);
+    expect(sequenceMessageY(2)).toBe(196);
+    expect(sequenceMessageY(3)).toBe(252);
   });
 });
 
