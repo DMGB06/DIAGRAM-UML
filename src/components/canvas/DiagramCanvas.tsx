@@ -24,6 +24,7 @@ import { StartEndNode } from "./nodes/StartEndNode";
 import { SystemBoundaryNode } from "./nodes/SystemBoundaryNode";
 import { UseCaseNode } from "./nodes/UseCaseNode";
 import { ParticipantNode } from "./nodes/ParticipantNode";
+import { SelectionToolbar } from "./SelectionToolbar";
 
 const nodeTypes: NodeTypes = {
   umlClass: ClassNode,
@@ -147,6 +148,7 @@ export function DiagramCanvas() {
         variant={BackgroundVariant.Dots}
       />
       <Controls />
+      <SelectionToolbar />
     </ReactFlow>
   );
 }
