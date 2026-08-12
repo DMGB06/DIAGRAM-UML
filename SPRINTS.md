@@ -32,7 +32,7 @@ Plan de trabajo de esta iteración (rediseño: interfaz + Clases/Secuencia sóli
 Sprint 0   Documentación y renombrado          ✅
 Sprint 1   Modelo técnico: detección + sync    ✅
 Sprint 2   Clases y Secuencia sólidos (roundtrip) ✅
-Sprint 3   Rediseño de interfaz (header + contextual)
+Sprint 3   Rediseño de interfaz (header + contextual) ✅
 Sprint 4   Cierre, verificación y siguiente ciclo
 ```
 
@@ -87,16 +87,16 @@ Backlog post-iteración (no forma parte de estos sprints): pulir Casos de uso/Ac
 
 ---
 
-## Sprint 3 — Rediseño de interfaz
+## Sprint 3 — Rediseño de interfaz ✅
 
 **Objetivo:** Header simplificado a máximo 4 controles visibles, apoyado en el store del Sprint 1.
 
 **Entregables:**
-- [ ] Quitar `<select>` de tipo de diagrama del header → badge de solo lectura ("Secuencia · detectado"), con selector inline solo si el código está vacío/ambiguo
-- [ ] Unificar "Generar visual" + "Generar codigo" → botón **Sincronizar** con indicador de `syncStatus`
-- [ ] Barra contextual flotante (solo con selección): Deshacer, Rehacer, Copiar, Pegar, Duplicar, Alinear, Distribuir, Eliminar
-- [ ] Menú **⋯**: Nuevo, Importar, Copiar código, Presentación, Limpiar
-- [ ] Panel izquierdo con pestañas Elementos | Código en vez de apilados
+- [x] Quitar `<select>` de tipo de diagrama del header → badge de solo lectura ("Secuencia · detectado"), con selector inline solo si el código está vacío/ambiguo
+- [x] Unificar "Generar visual" + "Generar codigo" → botón **Sincronizar** con indicador de `syncStatus`
+- [x] Barra contextual flotante (solo con selección): Deshacer, Rehacer, Copiar, Pegar, Duplicar, Alinear, Distribuir, Eliminar
+- [x] Menú **⋯**: Nuevo, Importar, Copiar código, Presentación, Limpiar
+- [x] Panel izquierdo con pestañas Elementos | Código en vez de apilados
 
 **DoD:** Header con máximo 4 controles en uso normal; verificado a mano con `npm run dev`.
 
@@ -146,4 +146,4 @@ No es sprint hasta priorizar. Candidatos:
 4. Anotar decisiones/gotchas nuevos en `docs/contexto/` sobre la marcha.
 5. Pasar al siguiente sprint.
 
-**Siguiente paso:** implementar Sprint 3 (rediseño de interfaz).
+**Siguiente paso:** implementar Sprint 4 (cierre y verificación).
