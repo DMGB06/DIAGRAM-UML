@@ -142,38 +142,6 @@ select {
   gap: 8px;
 }
 
-.header-tools {
-  display: flex;
-  min-height: 50px;
-  align-items: center;
-  gap: 10px;
-  overflow-x: auto;
-  border-top: 1px solid #0f172a;
-  padding: 8px 16px 10px;
-}
-
-.toolbar-group {
-  display: inline-flex;
-  height: 36px;
-  flex: 0 0 auto;
-  align-items: center;
-  gap: 6px;
-  border-right: 1px solid #1e293b;
-  padding-right: 10px;
-}
-
-.toolbar-group:last-child {
-  border-right: 0;
-}
-
-.toolbar-group-label {
-  color: #94a3b8;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0;
-  text-transform: uppercase;
-}
-
 .toolbar-field {
   display: inline-flex;
   align-items: center;
@@ -188,28 +156,6 @@ select {
   align-items: stretch;
   flex-direction: column;
   gap: 5px;
-}
-
-.icon-button {
-  display: inline-flex;
-  width: 32px;
-  height: 32px;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid var(--line-700);
-  border-radius: 6px;
-  background: var(--graphite-900);
-  color: var(--paper-100);
-}
-
-.icon-button:hover {
-  background: var(--graphite-800);
-}
-
-.icon-button.danger:hover {
-  border-color: #7f1d1d;
-  background: #450a0a;
-  color: #fecaca;
 }
 
 .export-popover {
