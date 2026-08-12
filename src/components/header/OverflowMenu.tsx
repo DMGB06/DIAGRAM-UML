@@ -24,8 +24,8 @@ import { useDiagramStore } from "../../store/useDiagramStore";
 interface OverflowMenuProps {
   isPropertiesPanelOpen: boolean;
   onToggleProperties: () => void;
-  isCodePanelOpen: boolean;
-  onToggleCodePanel: () => void;
+  isLeftPanelOpen: boolean;
+  onToggleLeftPanel: () => void;
   onEnterPresentation: () => void;
   onImportClick: () => void;
 }
@@ -33,8 +33,8 @@ interface OverflowMenuProps {
 export function OverflowMenu({
   isPropertiesPanelOpen,
   onToggleProperties,
-  isCodePanelOpen,
-  onToggleCodePanel,
+  isLeftPanelOpen,
+  onToggleLeftPanel,
   onEnterPresentation,
   onImportClick,
 }: OverflowMenuProps) {
@@ -145,12 +145,12 @@ export function OverflowMenu({
             className="overflow-menu-item"
             type="button"
             onClick={() => {
-              onToggleCodePanel();
+              onToggleLeftPanel();
               closeMenu();
             }}
           >
             <PanelLeft size={15} />
-            {isCodePanelOpen ? "Ocultar panel de codigo" : "Mostrar panel de codigo"}
+            {isLeftPanelOpen ? "Ocultar panel izquierdo" : "Mostrar panel izquierdo"}
           </button>
           <button
             className="overflow-menu-item"

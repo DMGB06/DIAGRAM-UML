@@ -24,11 +24,12 @@ export function App() {
   const canvasBackground = useDiagramStore((state) => state.canvasBackground);
   const syncStatus = useDiagramStore((state) => state.syncStatus);
   const importInputRef = useRef<HTMLInputElement | null>(null);
-  const [isCodePanelOpen, setIsCodePanelOpen] = useState(true);
+  const [isLeftPanelOpen, setIsLeftPanelOpen] = useState(true);
+  const [activeLeftTab, setActiveLeftTab] = useState<"elementos" | "codigo">("elementos");
   const [isPropertiesPanelOpen, setIsPropertiesPanelOpen] = useState(true);
   const [isPresentationMode, setIsPresentationMode] = useState(false);
   const gridColumns = [
-    isCodePanelOpen && !isPresentationMode ? "360px" : null,
+    isLeftPanelOpen && !isPresentationMode ? "360px" : null,
     "minmax(0, 1fr)",
     isPropertiesPanelOpen && !isPresentationMode ? "300px" : null,
   ]
@@ -146,8 +147,8 @@ export function App() {
               <OverflowMenu
                 isPropertiesPanelOpen={isPropertiesPanelOpen}
                 onToggleProperties={() => setIsPropertiesPanelOpen((value) => !value)}
-                isCodePanelOpen={isCodePanelOpen}
-                onToggleCodePanel={() => setIsCodePanelOpen((value) => !value)}
+                isLeftPanelOpen={isLeftPanelOpen}
+                onToggleLeftPanel={() => setIsLeftPanelOpen((value) => !value)}
                 onEnterPresentation={() => setIsPresentationMode(true)}
                 onImportClick={() => importInputRef.current?.click()}
               />
@@ -162,11 +163,26 @@ export function App() {
           gridTemplateColumns: gridColumns,
         }}
       >
-        {isCodePanelOpen && !isPresentationMode && (
+        {isLeftPanelOpen && !isPresentationMode && (
           <aside className="flex min-h-[calc(100vh-4rem)] flex-col border-r border-slate-800 bg-slate-950">
-            <ElementPanel />
+            <div className="left-panel-tabs">
+              <button
+                type="button"
+                className={`left-panel-tab ${activeLeftTab === "elementos" ? "active" : ""}`}
+                onClick={() => setActiveLeftTab("elementos")}
+              >
+                Elementos
+              </button>
+              <button
+                type="button"
+                className={`left-panel-tab ${activeLeftTab === "codigo" ? "active" : ""}`}
+                onClick={() => setActiveLeftTab("codigo")}
+              >
+                Codigo
+              </button>
+            </div>
             <div className="min-h-0 flex-1">
-              <CodeEditor />
+              {activeLeftTab === "elementos" ? <ElementPanel /> : <CodeEditor />}
             </div>
           </aside>
         )}
