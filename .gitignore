@@ -47,6 +47,9 @@ Thumbs.db
 agent-transcripts/
 agent-tools/
 
+# Superpowers (workspaces de SDD, mockups del companion visual)
+.superpowers/
+
 # TypeScript
 *.tsbuildinfo
 
