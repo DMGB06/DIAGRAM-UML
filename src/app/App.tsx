@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { Code2, RefreshCw } from "lucide-react";
 
 import { DiagramCanvas } from "../components/canvas/DiagramCanvas";
@@ -6,6 +6,7 @@ import { CodeEditor } from "../components/editor/CodeEditor";
 import { OverflowMenu } from "../components/header/OverflowMenu";
 import { ElementPanel } from "../components/panels/ElementPanel";
 import { PropertiesPanel } from "../components/panels/PropertiesPanel";
+import { getDiagramAccent } from "../diagram/diagramAccent";
 import { diagramDefinitions, getDiagramDefinition } from "../diagram/diagramRegistry";
 import { shouldShowTypeSelector } from "../diagram/typeSelectorVisibility";
 import { useDiagramStore } from "../store/useDiagramStore";
@@ -80,9 +81,13 @@ export function App() {
 
   const showTypeSelector = shouldShowTypeSelector(diagramType, source);
   const diagramLabel = getDiagramDefinition(diagramType).label;
+  const { accent, accentSoft } = getDiagramAccent(diagramType);
 
   return (
-    <main className="min-h-screen overflow-auto bg-slate-950 text-slate-100">
+    <main
+      className="min-h-screen overflow-auto bg-[var(--paper)] text-[var(--ink)]"
+      style={{ "--accent": accent, "--accent-soft": accentSoft } as CSSProperties}
+    >
       {isPresentationMode && (
         <button
           className="toolbar-button fixed right-4 top-4 z-50"
@@ -101,7 +106,9 @@ export function App() {
               </div>
               <div>
                 <h1 className="text-sm font-semibold tracking-normal">UMLSync</h1>
-                <p className="text-xs text-slate-400">Codigo UML + edicion visual, sincronizados</p>
+                <p className="text-xs text-[var(--graphite)]">
+                  Codigo UML + edicion visual, sincronizados
+                </p>
               </div>
             </div>
 
@@ -164,7 +171,7 @@ export function App() {
         }}
       >
         {isLeftPanelOpen && !isPresentationMode && (
-          <aside className="flex min-h-[calc(100vh-4rem)] flex-col border-r border-slate-800 bg-slate-950">
+          <aside className="flex min-h-[calc(100vh-4rem)] flex-col border-r border-[var(--line)] bg-[var(--paper)]">
             <div className="left-panel-tabs">
               <button
                 type="button"
@@ -187,12 +194,12 @@ export function App() {
           </aside>
         )}
         <section
-          className={`${isPresentationMode ? "min-h-screen" : "min-h-[calc(100vh-4rem)]"} min-w-0 bg-slate-900`}
+          className={`${isPresentationMode ? "min-h-screen" : "min-h-[calc(100vh-4rem)]"} min-w-0 bg-[var(--surface)]`}
         >
           <DiagramCanvas />
         </section>
         {isPropertiesPanelOpen && !isPresentationMode && (
-          <aside className="min-h-[calc(100vh-4rem)] border-l border-slate-800 bg-slate-950">
+          <aside className="min-h-[calc(100vh-4rem)] border-l border-[var(--line)] bg-[var(--paper)]">
             <PropertiesPanel />
           </aside>
         )}
