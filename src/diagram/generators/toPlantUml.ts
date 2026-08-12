@@ -10,13 +10,15 @@ export function toPlantUml(
   const aliases = new Map<string, string>();
 
   for (const node of nodes) {
-    const alias = toAlias(node.id);
-    aliases.set(node.id, alias);
-
     if (node.data.kind === "note") {
+      const alias = toAlias(node.id);
+      aliases.set(node.id, alias);
       lines.push(`note "${escapeText(node.data.label)}" as ${alias}`);
       continue;
     }
+
+    const alias = toAlias(node.data.label);
+    aliases.set(node.id, alias);
 
     const keyword =
       node.data.kind === "interface" ? "interface" : node.data.kind === "enum" ? "enum" : "class";

@@ -28,8 +28,8 @@ describe("toPlantUml", () => {
       },
     ];
 
-    expect(toPlantUml(nodes, [])).toContain("class cliente");
-    expect(toPlantUml(nodes, [])).toContain("class pedido");
+    expect(toPlantUml(nodes, [])).toContain("class Cliente");
+    expect(toPlantUml(nodes, [])).toContain("class Pedido");
   });
 
   it("generates relations from visual edges", () => {
@@ -61,7 +61,7 @@ describe("toPlantUml", () => {
       },
     ];
 
-    expect(toPlantUml(nodes, edges)).toContain("cliente --> pedido");
+    expect(toPlantUml(nodes, edges)).toContain("Cliente --> Pedido");
   });
 
   it("does not include visual position or style metadata in generated UML", () => {
@@ -94,5 +94,58 @@ describe("toPlantUml", () => {
 
     expect(reparsed.errors).toEqual([]);
     expect(reparsed.nodes.map((node) => node.id)).toEqual(["Usuario"]);
+  });
+
+  it("uses node label for alias, not auto-generated id", () => {
+    const nodes: Array<Node<DiagramNodeData>> = [
+      {
+        id: "class-1699999999999-1",
+        type: "umlClass",
+        position: { x: 100, y: 100 },
+        data: { label: "Usuario", kind: "class", style: baseStyle },
+      },
+    ];
+    const generated = toPlantUml(nodes, []);
+
+    expect(generated).toContain("class Usuario");
+    expect(generated).not.toContain("class-1699999999999-1");
+  });
+
+  it("correctly relates classes when id differs from label", () => {
+    const nodes: Array<Node<DiagramNodeData>> = [
+      {
+        id: "class-1699999999999-1",
+        type: "umlClass",
+        position: { x: 100, y: 100 },
+        data: { label: "Usuario", kind: "class", style: baseStyle },
+      },
+      {
+        id: "class-1699999999999-2",
+        type: "umlClass",
+        position: { x: 500, y: 100 },
+        data: { label: "Pedido", kind: "class", style: baseStyle },
+      },
+    ];
+    const edges: Array<Edge<DiagramEdgeData>> = [
+      {
+        id: "edge-1",
+        source: "class-1699999999999-1",
+        target: "class-1699999999999-2",
+        data: {
+          relation: "association",
+          lineStyle: "curve",
+          curveOffset: 120,
+          arrowDirection: "forward",
+        },
+      },
+    ];
+
+    const generated = toPlantUml(nodes, edges);
+
+    expect(generated).toContain("class Usuario");
+    expect(generated).toContain("class Pedido");
+    expect(generated).toContain("Usuario --> Pedido");
+    expect(generated).not.toContain("class-1699999999999-1");
+    expect(generated).not.toContain("class-1699999999999-2");
   });
 });
