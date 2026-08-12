@@ -1,5 +1,6 @@
-import { BaseEdge, type EdgeProps } from "@xyflow/react";
+import { BaseEdge, EdgeLabelRenderer, type EdgeProps } from "@xyflow/react";
 
+import { computeEdgeGeometry } from "../../../diagram/edgeGeometry";
 import type { DiagramEdgeData } from "../../../diagram/types";
 
 export function EditableEdge({
@@ -15,46 +16,41 @@ export function EditableEdge({
   const edgeData = data as DiagramEdgeData | undefined;
   const lineStyle = edgeData?.lineStyle ?? "curve";
   const curveOffset = edgeData?.curveOffset ?? 0;
-  const path = getEditablePath(sourceX, sourceY, targetX, targetY, lineStyle, curveOffset);
+  const { path, labelX, labelY } = computeEdgeGeometry(
+    sourceX,
+    sourceY,
+    targetX,
+    targetY,
+    lineStyle,
+    curveOffset,
+  );
 
   return (
-    <BaseEdge
-      path={path}
-      markerStart={markerStart}
-      markerEnd={markerEnd}
-      interactionWidth={28}
-      style={{
-        stroke: selected ? "#06b6d4" : "#64748b",
-        strokeWidth: selected ? 3 : 2,
-      }}
-    />
+    <>
+      <BaseEdge
+        path={path}
+        markerStart={markerStart}
+        markerEnd={markerEnd}
+        interactionWidth={28}
+        style={{
+          stroke: selected ? "#06b6d4" : "#64748b",
+          strokeWidth: selected ? 3 : 2,
+        }}
+      />
+      {edgeData?.label && (
+        <EdgeLabelRenderer>
+          <div
+            style={{
+              position: "absolute",
+              transform: `translate(-50%, -50%) translate(${labelX}px, ${labelY}px)`,
+              pointerEvents: "none",
+            }}
+            className="rounded border border-slate-700 bg-slate-900/90 px-1.5 py-0.5 text-xs text-slate-100"
+          >
+            {edgeData.label}
+          </div>
+        </EdgeLabelRenderer>
+      )}
+    </>
   );
-}
-
-function getEditablePath(
-  sourceX: number,
-  sourceY: number,
-  targetX: number,
-  targetY: number,
-  lineStyle: DiagramEdgeData["lineStyle"],
-  curveOffset: number,
-) {
-  if (lineStyle === "straight") {
-    return `M ${sourceX},${sourceY} L ${targetX},${targetY}`;
-  }
-
-  if (lineStyle === "step") {
-    const midX = sourceX + (targetX - sourceX) / 2;
-    return `M ${sourceX},${sourceY} L ${midX},${sourceY} L ${midX},${targetY} L ${targetX},${targetY}`;
-  }
-
-  const dx = targetX - sourceX;
-  const dy = targetY - sourceY;
-  const length = Math.max(Math.sqrt(dx * dx + dy * dy), 1);
-  const normalX = -dy / length;
-  const normalY = dx / length;
-  const controlX = sourceX + dx / 2 + normalX * curveOffset;
-  const controlY = sourceY + dy / 2 + normalY * curveOffset;
-
-  return `M ${sourceX},${sourceY} Q ${controlX},${controlY} ${targetX},${targetY}`;
 }
