@@ -23,7 +23,7 @@ export function ClassNode({ data, selected }: NodeProps<Node<DiagramNodeData>>) 
 
   return (
     <div
-      className={`min-w-44 overflow-hidden rounded border bg-white text-slate-950 shadow-sm ${
+      className={`min-w-44 overflow-hidden rounded border bg-white text-[var(--ink)] shadow-sm ${
         data.isEditingEdge ? "is-editing-edge" : ""
       }`}
       style={{
