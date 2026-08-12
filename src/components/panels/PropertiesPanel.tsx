@@ -1,9 +1,11 @@
-import { ArrowLeftRight, Moon, Palette, Sun } from "lucide-react";
+import { ArrowDown, ArrowLeftRight, ArrowUp, Moon, Palette, Sun, Trash2 } from "lucide-react";
 
 import { useDiagramStore } from "../../store/useDiagramStore";
 import type { EdgeSide } from "../../diagram/types";
 
 const colors = ["#e8f1ff", "#ecfdf5", "#fff7df", "#fee2e2", "#f3e8ff", "#ffffff"];
+const strokeColors = ["#2f5d9f", "#047857", "#a86b00", "#b91c1c", "#7e22ce", "#111827"];
+const textColors = ["#111827", "#334155", "#075985", "#166534", "#7f1d1d", "#ffffff"];
 const edgeSides: Array<{ value: EdgeSide; label: string }> = [
   { value: "left", label: "Izq." },
   { value: "right", label: "Der." },
@@ -17,10 +19,20 @@ export function PropertiesPanel() {
   const selectedNodeId = useDiagramStore((state) => state.selectedNodeId);
   const selectedEdgeId = useDiagramStore((state) => state.selectedEdgeId);
   const canvasBackground = useDiagramStore((state) => state.canvasBackground);
+  const projectError = useDiagramStore((state) => state.projectError);
+  const deleteSelected = useDiagramStore((state) => state.deleteSelected);
+  const updateSelectedNodeLabel = useDiagramStore((state) => state.updateSelectedNodeLabel);
   const updateSelectedNodeColor = useDiagramStore((state) => state.updateSelectedNodeColor);
+  const updateSelectedNodeStroke = useDiagramStore((state) => state.updateSelectedNodeStroke);
+  const updateSelectedNodeTextColor = useDiagramStore((state) => state.updateSelectedNodeTextColor);
   const reverseSelectedEdge = useDiagramStore((state) => state.reverseSelectedEdge);
   const updateSelectedEdgeType = useDiagramStore((state) => state.updateSelectedEdgeType);
   const updateSelectedEdgeCurve = useDiagramStore((state) => state.updateSelectedEdgeCurve);
+  const updateSelectedEdgeLabel = useDiagramStore((state) => state.updateSelectedEdgeLabel);
+  const updateSelectedEdgeMessageKind = useDiagramStore(
+    (state) => state.updateSelectedEdgeMessageKind,
+  );
+  const moveSelectedEdgeOrder = useDiagramStore((state) => state.moveSelectedEdgeOrder);
   const updateSelectedEdgeConnectionSide = useDiagramStore(
     (state) => state.updateSelectedEdgeConnectionSide,
   );
@@ -34,6 +46,12 @@ export function PropertiesPanel() {
         <Palette size={18} className="text-cyan-300" />
         <h2 className="text-sm font-semibold">Propiedades</h2>
       </div>
+
+      {projectError && (
+        <div className="mt-4 rounded border border-red-900/70 bg-red-950/40 p-3 text-xs text-red-100">
+          {projectError}
+        </div>
+      )}
 
       <div className="mt-5">
         <label className="text-xs font-medium text-slate-400">Fondo del lienzo</label>
@@ -71,9 +89,12 @@ export function PropertiesPanel() {
         <div className="mt-5 space-y-5">
           <div>
             <label className="text-xs font-medium text-slate-400">Elemento</label>
-            <div className="mt-2 rounded border border-slate-800 bg-slate-900 px-3 py-2 text-sm">
-              {selectedNode.data.label}
-            </div>
+            <input
+              className="mt-2 w-full rounded border border-slate-800 bg-slate-900 px-3 py-2 text-sm text-slate-100 outline-none focus:border-cyan-500"
+              value={selectedNode.data.label}
+              onChange={(event) => updateSelectedNodeLabel(event.target.value)}
+            />
+            <p className="mt-2 text-xs text-slate-500">Tipo: {selectedNode.data.kind}</p>
           </div>
 
           <div>
@@ -93,6 +114,38 @@ export function PropertiesPanel() {
           </div>
 
           <div>
+            <label className="text-xs font-medium text-slate-400">Color de borde</label>
+            <div className="mt-2 grid grid-cols-6 gap-2">
+              {strokeColors.map((color) => (
+                <button
+                  key={color}
+                  type="button"
+                  className="size-8 rounded border border-slate-700"
+                  style={{ background: color }}
+                  title={color}
+                  onClick={() => updateSelectedNodeStroke(color)}
+                />
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <label className="text-xs font-medium text-slate-400">Color de texto</label>
+            <div className="mt-2 grid grid-cols-6 gap-2">
+              {textColors.map((color) => (
+                <button
+                  key={color}
+                  type="button"
+                  className="size-8 rounded border border-slate-700"
+                  style={{ background: color }}
+                  title={color}
+                  onClick={() => updateSelectedNodeTextColor(color)}
+                />
+              ))}
+            </div>
+          </div>
+
+          <div>
             <label className="text-xs font-medium text-slate-400">Posicion</label>
             <div className="mt-2 grid grid-cols-2 gap-2 text-xs text-slate-300">
               <div className="rounded border border-slate-800 bg-slate-900 px-2 py-2">
@@ -103,6 +156,15 @@ export function PropertiesPanel() {
               </div>
             </div>
           </div>
+
+          <button
+            className="toolbar-button w-full justify-center border-red-900/70 text-red-200 hover:bg-red-950/50"
+            type="button"
+            onClick={deleteSelected}
+          >
+            <Trash2 size={16} />
+            Eliminar nodo
+          </button>
         </div>
       )}
 
@@ -118,6 +180,69 @@ export function PropertiesPanel() {
             </div>
           </div>
 
+          <div>
+            <label className="text-xs font-medium text-slate-400">Texto del mensaje</label>
+            <input
+              className="mt-2 w-full rounded border border-slate-800 bg-slate-900 px-3 py-2 text-sm text-slate-100 outline-none focus:border-cyan-500"
+              value={selectedEdge.data?.label ?? ""}
+              onChange={(event) => updateSelectedEdgeLabel(event.target.value)}
+            />
+          </div>
+
+          {selectedEdge.data?.order !== undefined && (
+            <div>
+              <label className="text-xs font-medium text-slate-400">Orden del mensaje</label>
+              <div className="mt-2 grid grid-cols-2 gap-2">
+                <button
+                  className="toolbar-button justify-center"
+                  type="button"
+                  onClick={() => moveSelectedEdgeOrder("up")}
+                >
+                  <ArrowUp size={16} />
+                  Subir
+                </button>
+                <button
+                  className="toolbar-button justify-center"
+                  type="button"
+                  onClick={() => moveSelectedEdgeOrder("down")}
+                >
+                  <ArrowDown size={16} />
+                  Bajar
+                </button>
+              </div>
+            </div>
+          )}
+
+          {selectedEdge.data?.messageKind && (
+            <div>
+              <label className="text-xs font-medium text-slate-400">Tipo de mensaje</label>
+              <div className="mt-2 grid grid-cols-2 gap-2">
+                <button
+                  className={`toolbar-button justify-center ${
+                    selectedEdge.data.messageKind === "message"
+                      ? "border-cyan-400 text-cyan-200"
+                      : ""
+                  }`}
+                  type="button"
+                  onClick={() => updateSelectedEdgeMessageKind("message")}
+                >
+                  Mensaje
+                </button>
+                <button
+                  className={`toolbar-button justify-center ${
+                    selectedEdge.data.messageKind === "response"
+                      ? "border-cyan-400 text-cyan-200"
+                      : ""
+                  }`}
+                  type="button"
+                  onClick={() => updateSelectedEdgeMessageKind("response")}
+                >
+                  Respuesta
+                </button>
+              </div>
+            </div>
+          )}
+
           <button
             className="toolbar-button w-full justify-center"
             type="button"
@@ -125,6 +250,15 @@ export function PropertiesPanel() {
           >
             <ArrowLeftRight size={16} />
             Invertir direccion
+          </button>
+
+          <button
+            className="toolbar-button w-full justify-center border-red-900/70 text-red-200 hover:bg-red-950/50"
+            type="button"
+            onClick={deleteSelected}
+          >
+            <Trash2 size={16} />
+            Eliminar flecha
           </button>
 
           <div>

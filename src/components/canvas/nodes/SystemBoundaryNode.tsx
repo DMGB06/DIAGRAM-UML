@@ -2,49 +2,24 @@ import { Handle, Position, type Node, type NodeProps } from "@xyflow/react";
 
 import type { DiagramNodeData } from "../../../diagram/types";
 
-export function ClassNode({ data, selected }: NodeProps<Node<DiagramNodeData>>) {
-  if (data.kind === "note") {
-    return (
-      <div
-        className={`min-w-40 rounded border px-3 py-3 text-sm shadow-sm ${
-          data.isEditingEdge ? "is-editing-edge" : ""
-        }`}
-        style={{
-          background: data.style.fill,
-          borderColor: selected ? "#06b6d4" : data.style.stroke,
-          color: data.style.text,
-        }}
-      >
-        <ConnectionHandles />
-        <div className="whitespace-pre-wrap">{data.label}</div>
-      </div>
-    );
-  }
-
+export function SystemBoundaryNode({ data, selected }: NodeProps<Node<DiagramNodeData>>) {
   return (
     <div
-      className={`min-w-44 overflow-hidden rounded border bg-white text-slate-950 shadow-sm ${
+      className={`min-h-52 min-w-72 rounded border-2 border-dashed bg-white/30 p-3 text-sm font-semibold shadow-sm ${
         data.isEditingEdge ? "is-editing-edge" : ""
       }`}
       style={{
-        background: data.style.fill,
         borderColor: selected ? "#06b6d4" : data.style.stroke,
         color: data.style.text,
       }}
     >
-      <ConnectionHandles />
-      <div className="border-b px-3 py-2 text-center text-sm font-semibold">
-        {data.kind === "interface" ? `<<${data.kind}>> ` : ""}
-        {data.kind === "enum" ? `<<${data.kind}>> ` : ""}
-        {data.label}
-      </div>
-      <div className="px-3 py-2 text-xs text-slate-600">+ atributo: tipo</div>
-      <div className="border-t px-3 py-2 text-xs text-slate-600">+ metodo(): void</div>
+      <Handles />
+      {data.label}
     </div>
   );
 }
 
-function ConnectionHandles() {
+function Handles() {
   return (
     <>
       <Handle id="left-target" type="target" position={Position.Left} className="uml-handle" />

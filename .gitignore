@@ -5,15 +5,21 @@ node_modules/
 dist/
 build/
 
+# Documentación local / borradores / notas de trabajo
+# (En repo solo: README.md, proyecto.md, SPRINTS.md en la raíz)
+docs/
+
 # Vite / tooling cache
 .vite/
 .cache/
 node_modules/.tmp/
+.eslintcache
 
 # Test output
 coverage/
 test-results/
 playwright-report/
+vitest.config.ts.timestamp-*
 
 # Logs
 *.log
@@ -27,11 +33,27 @@ pnpm-debug.log*
 .env.*
 !.env.example
 
-# Editor / OS
+# Editor / IDE / OS
 .DS_Store
 Thumbs.db
 .idea/
 .vscode/
+*.swp
+*.swo
+*~
+
+# Cursor / agentes (local)
+.cursor/
+agent-transcripts/
+agent-tools/
 
 # TypeScript
 *.tsbuildinfo
+
+# Misc local
+*.local
+.temp/
+tmp/
+
+# Git worktrees (isolated implementation workspaces)
+.worktrees/
