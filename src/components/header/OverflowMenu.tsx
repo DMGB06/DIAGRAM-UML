@@ -6,10 +6,12 @@ import {
   FileJson,
   FilePlus2,
   Maximize2,
+  Moon,
   MoreHorizontal,
   PanelLeft,
   PanelRight,
   Presentation,
+  Sun,
 } from "lucide-react";
 
 import {
@@ -28,6 +30,8 @@ interface OverflowMenuProps {
   onToggleLeftPanel: () => void;
   onEnterPresentation: () => void;
   onImportClick: () => void;
+  isDarkTheme: boolean;
+  onToggleTheme: () => void;
 }
 
 export function OverflowMenu({
@@ -37,6 +41,8 @@ export function OverflowMenu({
   onToggleLeftPanel,
   onEnterPresentation,
   onImportClick,
+  isDarkTheme,
+  onToggleTheme,
 }: OverflowMenuProps) {
   const newProject = useDiagramStore((state) => state.newProject);
   const copySource = useDiagramStore((state) => state.copySource);
@@ -173,6 +179,17 @@ export function OverflowMenu({
           >
             <Presentation size={15} />
             Presentacion
+          </button>
+          <button
+            className="overflow-menu-item"
+            type="button"
+            onClick={() => {
+              onToggleTheme();
+              closeMenu();
+            }}
+          >
+            {isDarkTheme ? <Sun size={15} /> : <Moon size={15} />}
+            {isDarkTheme ? "Tema claro" : "Tema oscuro"}
           </button>
 
           <div className="overflow-menu-divider" />

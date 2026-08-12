@@ -10,6 +10,7 @@ import { getDiagramAccent } from "../diagram/diagramAccent";
 import { diagramDefinitions, getDiagramDefinition } from "../diagram/diagramRegistry";
 import { shouldShowTypeSelector } from "../diagram/typeSelectorVisibility";
 import { useDiagramStore } from "../store/useDiagramStore";
+import { loadThemePreference, saveThemePreference, type ThemePreference } from "./themePreference";
 
 export function App() {
   const generateFromSource = useDiagramStore((state) => state.generateFromSource);
@@ -29,6 +30,7 @@ export function App() {
   const [activeLeftTab, setActiveLeftTab] = useState<"elementos" | "codigo">("elementos");
   const [isPropertiesPanelOpen, setIsPropertiesPanelOpen] = useState(true);
   const [isPresentationMode, setIsPresentationMode] = useState(false);
+  const [theme, setTheme] = useState<ThemePreference>(() => loadThemePreference());
   const gridColumns = [
     isLeftPanelOpen && !isPresentationMode ? "360px" : null,
     "minmax(0, 1fr)",
@@ -51,6 +53,22 @@ export function App() {
 
     return () => window.clearTimeout(timeout);
   }, [canvasBackground, edges, nodes, saveCurrentProject, source]);
+
+  useEffect(() => {
+    if (theme === null) {
+      delete document.documentElement.dataset.theme;
+    } else {
+      document.documentElement.dataset.theme = theme;
+    }
+
+    saveThemePreference(theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    const isDark =
+      theme === "dark" || (theme === null && window.matchMedia("(prefers-color-scheme: dark)").matches);
+    setTheme(isDark ? "light" : "dark");
+  };
 
   const handleImportProject = async (file?: File) => {
     if (!file) {
@@ -158,6 +176,11 @@ export function App() {
                 onToggleLeftPanel={() => setIsLeftPanelOpen((value) => !value)}
                 onEnterPresentation={() => setIsPresentationMode(true)}
                 onImportClick={() => importInputRef.current?.click()}
+                isDarkTheme={
+                  theme === "dark" ||
+                  (theme === null && window.matchMedia("(prefers-color-scheme: dark)").matches)
+                }
+                onToggleTheme={toggleTheme}
               />
             </div>
           </div>
