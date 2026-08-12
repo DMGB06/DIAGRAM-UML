@@ -29,4 +29,34 @@ describe("useDiagramStore phase 10 sequence handle sides", () => {
     expect(edge.sourceHandle).toBe("right-source");
     expect(edge.targetHandle).toBe("left-target");
   });
+
+  it("assigns the next sequence message order from the max existing order, not the edge count (survives deletions)", () => {
+    useDiagramStore.getState().newProject({ confirm: false });
+    useDiagramStore.getState().setSource(
+      '@startuml\nparticipant "Cliente" as Cliente\nparticipant "Sistema" as Sistema\nparticipant "Base" as Base\nCliente -> Sistema: Uno\nSistema -> Base: Dos\nBase -> Cliente: Tres\n@enduml',
+    );
+    useDiagramStore.getState().generateFromSource();
+
+    const messageTwo = useDiagramStore
+      .getState()
+      .edges.find((edge) => edge.data?.order === 2);
+    expect(messageTwo).toBeDefined();
+
+    useDiagramStore.getState().selectEdge(messageTwo!.id);
+    useDiagramStore.getState().deleteSelected();
+
+    useDiagramStore.getState().addEdge({
+      source: "Cliente",
+      target: "Base",
+      sourceHandle: "left-source",
+      targetHandle: "right-target",
+    });
+
+    const orders = useDiagramStore
+      .getState()
+      .edges.map((edge) => edge.data?.order)
+      .sort((a, b) => (a ?? 0) - (b ?? 0));
+
+    expect(orders).toEqual([1, 3, 4]);
+  });
 });

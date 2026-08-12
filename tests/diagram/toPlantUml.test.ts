@@ -148,4 +148,40 @@ describe("toPlantUml", () => {
     expect(generated).not.toContain("class-1699999999999-1");
     expect(generated).not.toContain("class-1699999999999-2");
   });
+
+  it("keeps two nodes with the same label as distinct classes with unique aliases", () => {
+    const nodes: Array<Node<DiagramNodeData>> = [
+      {
+        id: "class-1",
+        type: "umlClass",
+        position: { x: 100, y: 100 },
+        data: { label: "Cliente", kind: "class", style: baseStyle },
+      },
+      {
+        id: "class-2",
+        type: "umlClass",
+        position: { x: 300, y: 100 },
+        data: { label: "Cliente", kind: "class", style: baseStyle },
+      },
+    ];
+    const edges: Array<Edge<DiagramEdgeData>> = [
+      {
+        id: "edge-1",
+        source: "class-1",
+        target: "class-2",
+        data: {
+          relation: "association",
+          lineStyle: "curve",
+          curveOffset: 0,
+          arrowDirection: "forward",
+        },
+      },
+    ];
+
+    const uml = toPlantUml(nodes, edges);
+    const reparsed = parseClassDiagram(uml);
+
+    expect(reparsed.errors).toEqual([]);
+    expect(reparsed.nodes).toHaveLength(2);
+  });
 });

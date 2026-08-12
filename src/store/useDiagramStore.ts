@@ -4,6 +4,7 @@ import { create } from "zustand";
 import { getDiagramDefinition } from "../diagram/diagramRegistry";
 import { detectDiagramType } from "../diagram/detectDiagramType";
 import { mergeNodePositions } from "../diagram/mergeLayout";
+import { maxMessageOrder } from "../diagram/sequenceLayout";
 import type {
   DiagramEdgeData,
   DiagramNodeData,
@@ -295,12 +296,13 @@ export const useDiagramStore = create<DiagramState>((set, get) => ({
     }
 
     const diagramType = get().diagramType;
+    const nextOrder = maxMessageOrder(get().edges) + 1;
     const edgeData: DiagramEdgeData = {
       ...defaultEdgeData,
       lineStyle: diagramType === "sequence" ? "straight" : defaultEdgeData.lineStyle,
-      label: diagramType === "sequence" ? `mensaje ${get().edges.length + 1}` : undefined,
+      label: diagramType === "sequence" ? `mensaje ${nextOrder}` : undefined,
       messageKind: diagramType === "sequence" ? "message" : undefined,
-      order: diagramType === "sequence" ? get().edges.length + 1 : undefined,
+      order: diagramType === "sequence" ? nextOrder : undefined,
     };
     const edge = applyArrowDirection(
       {

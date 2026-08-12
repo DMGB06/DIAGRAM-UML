@@ -8,16 +8,17 @@ export function toPlantUml(
 ) {
   const lines = ["@startuml"];
   const aliases = new Map<string, string>();
+  const usedAliases = new Set<string>();
 
   for (const node of nodes) {
     if (node.data.kind === "note") {
-      const alias = toAlias(node.id);
+      const alias = uniqueAlias(toAlias(node.id), usedAliases);
       aliases.set(node.id, alias);
       lines.push(`note "${escapeText(node.data.label)}" as ${alias}`);
       continue;
     }
 
-    const alias = toAlias(node.data.label);
+    const alias = uniqueAlias(toAlias(node.data.label), usedAliases);
     aliases.set(node.id, alias);
 
     const keyword =
@@ -41,6 +42,19 @@ export function toPlantUml(
 function toAlias(value: string) {
   const alias = value.replace(/[^A-Za-z0-9_]/g, "_");
   return /^[A-Za-z_]/.test(alias) ? alias : `N_${alias}`;
+}
+
+function uniqueAlias(base: string, used: Set<string>) {
+  let alias = base;
+  let suffix = 2;
+
+  while (used.has(alias)) {
+    alias = `${base}_${suffix}`;
+    suffix += 1;
+  }
+
+  used.add(alias);
+  return alias;
 }
 
 function escapeText(value: string) {
